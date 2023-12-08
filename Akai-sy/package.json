@@ -1,0 +1,14 @@
+{
+  "name": "Akai-sy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.58.1",
+    "sass-loader": "^10.4.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "uview-ui": "^2.0.31"
+  }
+}
