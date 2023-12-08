@@ -1,19 +1,18 @@
 # Akai-uni
 
 #### 介绍
-uniapp小程序开发模板(集成Tuniao-ui、uView-ui、Z-paging)等高性能UI库和刷新加载插件。集成了request请求和upload上传等公共库，包含axios三层封装以及公共库封装。开箱即用!
+uniapp小程序开发模板(集成Tuniao-ui、uView-ui、Z-paging)等高性能UI库和刷新加载插件以及功能库lodash.js。集成了request请求和upload上传等公共库，包含axios三层封装以及公共库封装。开箱即用!
 
 #### 软件架构
-uView-Ui Tuniao-Ui Z-paging Animate.css
+uView-Ui Tuniao-Ui Z-paging Animate.css loadsh.js
 
 #### 演示模板(Dcloud插件地址)
 https://ext.dcloud.net.cn/publisher?id=690316
 
-#### 个人博客(面试题，学习笔记，工作中总结)/此项目基于vuepress+uniCloud打造，目前在github和gitee开源
+#### 个人博客(面试题，学习笔记，工作中总结)/此项目基于vitepress+uniCloud打造，目前在github和gitee开源
 https://salephine.asia
 https://gitee.com/AkaiBlog/akai-blog
 https://github.com/akaibiu/akaibui.github.io
-
 
 #### 安装教程
 
