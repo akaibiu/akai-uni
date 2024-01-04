@@ -200,7 +200,7 @@
       searchResult(value) {
         let result = [];
           // console.log(this.list)
-          let data = this.list.filter(item => item.label.indexOf(value) > -1);
+          let data = this.list.filter(item => item[this.labelName].indexOf(value) > -1);
           if (data.length > 0) {
             result.push(data
             );
@@ -396,7 +396,11 @@
         }
 
         &--confirm {
-          color: $tn-main-color;
+          // color: $tn-main-color;
+          background-color: #07C160;
+          color: #FFFFFF;
+          padding: 10rpx 25rpx;
+          border-radius: 10rpx;
         }
       }
 

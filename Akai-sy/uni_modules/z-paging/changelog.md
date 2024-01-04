@@ -1,3 +1,6 @@
-## 2.5.3（2023-02-13）
-1.`新增` `reload`、`refresh`、`complete`、`completeByTotal`、`completeByNoMore`、`completeByKey`、`setLocalPaging`等方法的返回值添加请求结果promise，可以通过方法名().then()获取本次操作请求结束后的【总列表】和【是否有更多数据】。  
-2.`修复` 由`v2.5.0`引出的在vue2 + 钉钉小程序中，`slot="top"`插入无效的问题。  
+## 2.6.9（2024-01-01）
+2024新年快乐！！祝大家在新的一年里工作顺利，事事顺心！  
+1.`新增` `chat-record-more-offset`，支持控制使用聊天记录模式时滚动到顶部后，列表垂直移动偏移距离。  
+2.`修复` nvue中`nvueWaterfallConfig`和`nvueRefresherStyle`报错的问题。  
+3.`修复` 下拉刷新可能出现的loading变大闪动问题。  
+4.`优化` 核心逻辑添加注释&规范插件&demo代码格式。  

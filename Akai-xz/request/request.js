@@ -33,7 +33,6 @@ const request = config => {
 		url = url.slice(0, -1)
 		config.url = url
 	}
-	uni.showLoading();
 	return new Promise((resolve, reject) => {
 		uni.request({
 				method: config.method || 'get',

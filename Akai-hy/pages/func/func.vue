@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<!-- animate.css使用案例，设置元素类名 -->
 		<view class="title animate__animated animate__heartBeat">
 			animation动画示例
 		</view>
@@ -45,9 +46,6 @@
 				showdate: false,
 			}
 		},
-		onShow() {
-			console.log(this.vuex_frenidList,'vuex_frenidList');
-		},
 		created() {
 
 		},
@@ -55,7 +53,7 @@
 			// 积分签到
 			goSignIn(){
 				uni.navigateTo({
-					url:'/pages/func/sign/sign'
+					url:'/pagesFunc/sign'	
 				})
 			},
 			// 登录
@@ -66,77 +64,77 @@
 			},
 			goLodash() {
 				uni.navigateTo({
-					url: '/pages/func/lodash/lodash'
+					url: '/pagesFunc/lodash'
 				})
 			},
 			goCard() {
 				uni.navigateTo({
-					url: '/pages/func/card/card'
+					url: '/pagesFunc/card'
 				})
 			},
 			goFlex() {
 				uni.navigateTo({
-					url:'/pages/func/Flex/Flex'
+					url:'/pagesFunc/Flex'
 				})
 			},
 			goInfo() {
 				uni.navigateTo({
-					url: 'personalSetting/personalSetting'
+					url:'/pagesFunc/personalSetting'
 				})
 			},
 			goRecords() {
 				uni.navigateTo({
-					url: '/pages/func/records/records'
+					url: '/pagesFunc/records'
 				})
 			},
 			goRefresh() {
 				uni.navigateTo({
-					url: '/pages/func/refresh/refresh'
+					url: '/pagesFunc/refresh'
 				})
 			},
 			goSwiperTab() {
 				uni.navigateTo({
-					url: '/pages/func/swiperTab/swiperTab'
+					url: '/pagesFunc/swiperTab'
 				})
 			},
 			goTech() {
 				uni.navigateTo({
-					url: '/pages/func/techSupport/techSupport'
+					url: '/pagesFunc/techSupport'
 				})
 			},
 			goScorollX() {
 				uni.navigateTo({
-					url: '/pages/func/scrollBox/scrollBox'
+					url: '/pagesFunc/scrollBox'
 				})
 			},
 			goScorollY() {
 				uni.navigateTo({
-					url: '/pages/func/music/music'
+					url: '/pagesFunc/music'
 				})
 			},
 			goSearchNav() {
 				uni.navigateTo({
-					url: 'searchNav/searchNav'
+					url:'/pagesFunc/searchNav'
 				})
 			},
 			goShake() {
 				uni.navigateTo({
-					url: '/pages/func/shakeINput/shakeINput'
+					url: '/pagesFunc/shakeINput'
 				})
 			},
 			goLadder() {
 				uni.navigateTo({
-					url: '/pages/func/ladderShape/ladderShape'
+					url: '/pagesFunc/ladderShape'
 				})
 			},
 			goCircleTwo(){
 				uni.navigateTo({
-					url:'/pages/func/ladderShapeTwo/ladderShapeTwo'
+					url:'/pagesFunc/ladderShapeTwo'
 				})
 			},
 			goCircle() {
 				uni.navigateTo({
-					url: '/pages/func/halfCircle/halfCircle'
+					url: '/pagesFunc/halfCircle'
 				})
 			}
 		}
@@ -144,7 +142,7 @@
 </script>
 
 <style lang="scss" scoped>
-	// 动画执行
+	// animate.css 动画执行设置示例
 	.animate__heartBeat {
 		animation-duration: 3000;
 		animation-iteration-count: infinite;

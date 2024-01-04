@@ -9,196 +9,59 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		},{
-			"path": "pages/job/job",
-			"style": {
-				"navigationBarTitleText": "招聘",
-				"enablePullDownRefresh": false
-			}
-		},{
+		}, {
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "Mikuya"
 			}
-		},{
-			"path": "pages/login/login",
+		}, {
+			"path": "pages/func/func",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "功能",
+				"enablePullDownRefresh": false
 			}
-		},{
-            "path" : "pages/mine/order/order",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom"
-            }
-        }
-		,{
-		    "path" : "pages/mine/form/form",
-		    "style" :                                                                                    
-		    {
-		       "navigationBarTitleText": "表单",
-		       "enablePullDownRefresh": false
-		    }
 		}
-        ,{
-            "path" : "pages/mine/userinfo/userinfo",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "我的信息",
-                "enablePullDownRefresh": false
-            }
-        }
-        ,{
-            "path" : "pages/mine/refresh/refresh",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "刷新",
-                "enablePullDownRefresh": false
-            }
-        }
-        ,{
-            "path" : "pages/mine/personalSetting/personalSetting",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "个人信息设置",
-                "enablePullDownRefresh": false
-            }
-        }
-        ,{
-            "path" : "pages/mine/swiperTab/swiperTab",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "全屏轮播带选项卡",
-                "enablePullDownRefresh": false
-            }
-        }
-        ,{
-            "path" : "pages/mine/loginTwo/loginTwo",
-            "style" :                                                                                    
-            {
-              "navigationStyle": "custom"
-            }
-        }
-        ,{
-            "path" : "pages/mine/techSupport/techSupport",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "技术支持",
-                "enablePullDownRefresh": false
-            }
-        }
-        ,{
-            "path" : "pages/mine/Flex/Flex",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "Flex完美布局",
-                "enablePullDownRefresh": false
-            }
-        }
-		
-        ,{
-            "path" : "pages/mine/discovery/discovery",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom"
-            }
-        }
-        ,{
-            "path" : "pages/mine/totalData/totalData",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "数据统计",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/cashOut/cashOut",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "提现兑换",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/records/records",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "记录列表",
-                "enablePullDownRefresh": false
-            }
-            
-        } ,{
-            "path" : "pages/index/release/release",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "发布商品",
-                "enablePullDownRefresh": false
-            }
-            
-        },{
-            "path" : "pages/job/jobDetail/jobDetail",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "职位详情",
-                "enablePullDownRefresh": false
-            }
-            
-        },{
-            "path" : "pages/index/goodsDetail/goodsDetail",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "商品详情",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/lodash/lodash",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "lodash",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/navSearch/navSearch",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom"
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/me/me",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom"
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/login-s/login-s",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "登录",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/sign/sign",
-            "style" :                                                                                    
-            {
-              "navigationBarTitleText": "积分签到",
-              "navigationBarBackgroundColor": "#3da2fe",
-              "enablePullDownRefresh": false,
-              "navigationBarTextStyle": "white"
-            }
-        }
-    ],
+	], //进入主包pages下的mine页面时，加载分包important
+	"preloadRule": {
+		"pages/mine/mine": {
+			"network": "all",
+			"packages": ["pagesMine"]
+		}
+	},
+	"subPackages": [{
+		"root": "pagesFunc",
+		"name": "pagesFunc",
+		"independent": false, //设置为独立分包
+		"pages": [{
+			"path": "index/index",
+			"style": {
+				"navigationBarTitleText": "pagesFunc的分包页面",
+				"enablePullDownRefresh": false
+			}
+		}]
+	}, {
+		"root": "pagesIndex",
+		"name": "pagesIndex",
+		"independent": false, //设置为独立分包
+		"pages": [{
+			"path": "index/index",
+			"style": {
+				"navigationBarTitleText": "pagesIndex的分包页面",
+				"enablePullDownRefresh": false
+			}
+		}]
+	},{
+		"root": "pagesMine",
+		"name": "pagesMine",
+		"independent": false, //设置为独立分包
+		"pages": [{
+			"path": "index/index",
+			"style": {
+				"navigationBarTitleText": "pagesMine的分包页面",
+				"enablePullDownRefresh": false
+			}
+		}]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "Mikuya",
@@ -217,11 +80,11 @@
 				"selectedIconPath": "static/tabbar/home_tnnew.png",
 				"text": "首页"
 			}, {
-				"pagePath": "pages/job/job",
+				"pagePath": "pages/func/func",
 				"iconPath": "static/tabbar/preferred_tn.png",
 				"selectedIconPath": "static/tabbar/preferred_tnnew.png",
-				"text": "招聘"
-			}, 
+				"text": "功能"
+			},
 			{
 				"pagePath": "pages/mine/mine",
 				"iconPath": "static/tabbar/mine_tn.png",

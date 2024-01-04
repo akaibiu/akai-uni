@@ -2,7 +2,7 @@
 	<view>
 		<view class="address-window" :class="value === true ? 'on' : ''">
             <view class="title">
-                <image class="title-logo" src="../../static/images/l-logo.png" mode=""></image>
+                <image class="title-logo" src="@/static/index/l-logo.png" mode=""></image>
                 <view class="title-txt">
                     小程序 申请
                 </view>
@@ -51,7 +51,7 @@ export default {
 	},
 	data: function() {
 		return {
-            headimg:'../../static/images/l-unhead.png',
+            headimg:'../../static/index/l-unhead.png',
             avatarUrl:'',
             nickName:'',
 		};

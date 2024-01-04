@@ -2,151 +2,184 @@
 	"easycom": {
 		"^tn-(.*)": "@/tuniao-ui/components/tn-$1/tn-$1.vue"
 	},
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/mine/mine",
+	//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [{
+		"path": "pages/mine/mine",
+		"style": {
+			"navigationStyle": "custom"
+		}
+	}, {
+		"path": "pages/index/index",
+		"style": {
+			"navigationBarTitleText": "Mikuya"
+		}
+	}, {
+		"path": "pages/job/job",
+		"style": {
+			"navigationBarTitleText": "招聘",
+			"enablePullDownRefresh": false
+		}
+	}    ,{
+            "path" : "pages/loginA/loginA",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "登录",
+                "enablePullDownRefresh": false
+            }
+        }
+    ],
+	//进入主包pages下的func页面时，加载分包important
+	"preloadRule": {
+		"pages/mine/mine": {
+			"network": "all",
+			"packages": ["pagesMine"]
+		}
+	},
+	"subPackages": [{
+		"root": "pagesMine",
+		"name": "pagesMine",
+		"independent": false, // 设置为独立分包 一般默认为false
+		"pages": [{
+			//path最前面不需要 斜杆 /
+			"path": "cashOut/cashOut",
 			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "Mikuya"
-			}
-		}, {
-			"path": "pages/job/job",
-			"style": {
-				"navigationBarTitleText": "招聘",
+				"navigationBarTitleText": "提现",
 				"enablePullDownRefresh": false
 			}
-
-		}, {
-			"path": "pages/index/release/release",
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "discovery/discovery",
 			"style": {
-				"navigationBarTitleText": "商品发布"
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/job/jobDetail/jobDetail",
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "flex/flex",
 			"style": {
-				"navigationBarTitleText": "职位详情"
+				"navigationBarTitleText": "flex布局",
+				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/index/goodsDetail/goodsDetail",
-			"style": {
-				"navigationBarTitleText": "商品详情"
-			}
-		}, {
-			"path": "pages/login/login",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/mine/order/order",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/mine/form/form",
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "form/form",
 			"style": {
 				"navigationBarTitleText": "表单",
 				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/mine/userinfo/userinfo",
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "lodash/lodash",
 			"style": {
-				"navigationBarTitleText": "我的信息",
+				"navigationBarTitleText": "lodash.js",
 				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/mine/refresh/refresh",
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "login/login",
 			"style": {
-				"navigationBarTitleText": "刷新",
+				"navigationBarTitleText": "登录",
 				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/mine/personalSetting/personalSetting",
-			"style": {
-				"navigationBarTitleText": "个人信息设置",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/mine/login/login",
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "me/me",
 			"style": {
 				"navigationStyle": "custom"
 			}
-		}, {
-			"path": "pages/mine/Flex/Flex",
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "navSearch/navSearch",
 			"style": {
-				"navigationBarTitleText": "Flex完美布局",
-				"enablePullDownRefresh": false
+				"navigationStyle": "custom"
 			}
-		}, {
-			"path": "pages/mine/discovery/discovery",
-			"style": {
-				"navigationBarTitleText": "发现",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/mine/cashOut/cashOut",
-			"style": {
-				"navigationBarTitleText": "提现兑换",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/mine/records/records",
-			"style": {
-				"navigationBarTitleText": "记录列表",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/mine/lodash/lodash",
-			"style": {
-				"navigationBarTitleText": "LODASH",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/mine/normalSwiper/normalSwiper",
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "normalSwiper/normalSwiper",
 			"style": {
 				"navigationBarTitleText": "简单滑动",
 				"enablePullDownRefresh": false
 			}
-
-		}
-		, {
-			"path": "pages/mine/me/me",
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "order/order",
 			"style": {
 				"navigationStyle": "custom"
 			}
-		}
-	    ,{
-            "path" : "pages/mine/navSearch/navSearch",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom"
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/login-s/login-s",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "LOGING",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/sign/sign",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "积分签到",
-              "navigationBarBackgroundColor": "#3da2fe",
-			  "enablePullDownRefresh": false,
-              "navigationBarTextStyle": "white"
-            }
-            
-        }
-    ],
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "personalSetting/personalSetting",
+			"style": {
+				"navigationBarTitleText": "个人信息设置",
+				"enablePullDownRefresh": false
+			}
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "records/records",
+			"style": {
+				"navigationBarTitleText": "记录列表",
+				"enablePullDownRefresh": false
+			}
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "refresh/refresh",
+			"style": {
+				"navigationBarTitleText": "刷新",
+				"enablePullDownRefresh": false
+			}
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "sign/sign",
+			"style": {
+				"navigationBarTitleText": "积分签到",
+				"navigationBarBackgroundColor": "#3da2fe",
+				"enablePullDownRefresh": false,
+				"navigationBarTextStyle": "white"
+			}
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "userinfo/userinfo",
+			"style": {
+				"navigationBarTitleText": "我的信息",
+				"enablePullDownRefresh": false
+			}
+		},{
+			//path最前面不需要 斜杆 /
+			"path": "waterfall/waterfall",
+			"style": {
+				"navigationBarTitleText": "瀑布流",
+				"enablePullDownRefresh": false
+			}
+		}]
+	}, {
+		"root": "pagesJob",
+		"name": "pagesJob",
+		"independent": false, //设置为独立分包
+		"pages": [{
+			"path": "jobDetail/jobDetail",
+			"style": {
+				"navigationBarTitleText": "职位详情",
+				"enablePullDownRefresh": false
+			}
+		}]
+	}, {
+		"root": "pagesIndex",
+		"name": "pagesIndex",
+		"independent": false, //设置为独立分包
+		"pages": [{
+			"path": "goodsDetail/goodsDetail",
+			"style": {
+				"navigationBarTitleText": "商品详情",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "release/release",
+			"style": {
+				"navigationBarTitleText": "发布闲置",
+				"enablePullDownRefresh": false
+			}
+		}]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "Mikuya",

@@ -19,16 +19,14 @@ export default {
 			type: [Number, String],
 			default: u.gc('defaultPageSize', 10),
 			validator: (value) => {
-				if(value <= 0) u.consoleErr('default-page-size必须大于0！');
+				if (value <= 0) u.consoleErr('default-page-size必须大于0！');
 				return value > 0;
 			}
 		},
 		//为保证数据一致，设置当前tab切换时的标识key，并在complete中传递相同key，若二者不一致，则complete将不会生效
 		dataKey: {
 			type: [Number, String, Object],
-			default: function() {
-				return u.gc('dataKey', null);
-			},
+			default: u.gc('dataKey', null),
 		},
 		//使用缓存，若开启将自动缓存第一页的数据，默认为否。请注意，因考虑到切换tab时不同tab数据不同的情况，默认仅会缓存组件首次加载时第一次请求到的数据，后续的下拉刷新操作不会更新缓存。
 		useCache: {
@@ -100,6 +98,11 @@ export default {
 			type: Boolean,
 			default: u.gc('useChatRecordMode', false)
 		},
+		//使用聊天记录模式时滚动到顶部后，列表垂直移动偏移距离。默认0rpx。单位px
+		chatRecordMoreOffset: {
+			type: [Number, String],
+			default: u.gc('chatRecordMoreOffset', '0rpx')
+		},
 		//使用聊天记录模式时是否自动隐藏键盘：在用户触摸列表时候自动隐藏键盘，默认为是
 		autoHideKeyboardWhenChat: {
 			type: Boolean,
@@ -109,6 +112,11 @@ export default {
 		concat: {
 			type: Boolean,
 			default: u.gc('concat', true)
+		},
+		//请求失败是否触发reject，默认为是
+		callNetworkReject: {
+			type: Boolean,
+			default: u.gc('callNetworkReject', true)
 		},
 		//父组件v-model所绑定的list的值
 		value: {
@@ -152,7 +160,7 @@ export default {
 			fromEmptyViewReload: false,
 			queryFrom: '',
 			listRendering: false,
-			listRenderingTimeout: null
+			isHandlingRefreshToPage: false
 		}
 	},
 	computed: {
@@ -169,8 +177,10 @@ export default {
 			return this.useCache && !!this.cacheKey;
 		},
 		finalCacheKey() {
-			if (!this.cacheKey) return null;
-			return `${c.cachePrefixKey}-${this.cacheKey}`; 
+			return this.cacheKey ? `${c.cachePrefixKey}-${this.cacheKey}` : null; 
+		},
+		finalChatRecordMoreOffset() {
+			return u.convertToPx(this.chatRecordMoreOffset);
 		},
 		isFirstPage() {
 			return this.pageNo === this.defaultPageNo;
@@ -204,7 +214,7 @@ export default {
 		// #endif
 	},
 	methods: {
-		//请求结束(成功或者失败)调用此方法，将请求的结果传递给z-paging处理，第一个参数为请求结果数组，第二个参数为是否成功(默认是是）
+		// 请求结束(成功或者失败)调用此方法，将请求的结果传递给z-paging处理，第一个参数为请求结果数组，第二个参数为是否成功(默认为是）
 		complete(data, success = true) {
 			this.customNoMore = -1;
 			return this.addData(data, success);
@@ -212,9 +222,7 @@ export default {
 		//【保证数据一致】请求结束(成功或者失败)调用此方法，将请求的结果传递给z-paging处理，第一个参数为请求结果数组，第二个参数为dataKey，需与:data-key绑定的一致，第三个参数为是否成功(默认为是）
 		completeByKey(data, dataKey = null, success = true) {
 			if (dataKey !== null && this.dataKey !== null && dataKey !== this.dataKey) {
-				if (this.isFirstPage) {
-					this.endRefresh();
-				}
+				this.isFirstPage && this.endRefresh();
 				return new Promise(resolve => resolve());
 			}
 			this.customNoMore = -1;
@@ -232,16 +240,15 @@ export default {
 					return new Promise((resolve, reject) => {
 						this.$nextTick(() => {
 							let nomore = false;
-							let realTotalDataCount = this.realTotalData.length;
-							if (this.pageNo == this.defaultPageNo) {
-								realTotalDataCount = 0;
-							}
+							const realTotalDataCount = this.pageNo == this.defaultPageNo ? 0 : this.realTotalData.length;
 							const dataLength = this.privateConcat ? data.length : 0;
 							let exceedCount = realTotalDataCount + dataLength - total;
+							// 没有更多数据了
 							if (exceedCount >= 0) {
 								nomore = true;
+								// 仅截取total内部分的数据
 								exceedCount = this.defaultPageSize - exceedCount;
-								if (exceedCount > 0 && exceedCount < data.length && this.privateConcat) {
+								if (this.privateConcat && exceedCount > 0 && exceedCount < data.length) {
 									data = data.splice(0, exceedCount);
 								}
 							}
@@ -252,14 +259,19 @@ export default {
 			}
 			return this.addData(data, success);
 		},
-		//【自行判断是否有更多数据】请求结束(成功或者失败)调用此方法，将请求的结果传递给z-paging处理，第一个参数为请求结果数组，第二个参数为是否有更多数据，第三个参数为是否成功(默认是是）
+		//【自行判断是否有更多数据】请求结束(成功或者失败)调用此方法，将请求的结果传递给z-paging处理，第一个参数为请求结果数组，第二个参数为是否没有更多数据，第三个参数为是否成功(默认是是）
 		completeByNoMore(data, nomore, success = true) {
 			if (nomore != 'undefined') {
 				this.customNoMore = nomore == true ? 1 : 0;
 			}
 			return this.addData(data, success);
 		},
-		//与上方complete方法功能一致，新版本中设置服务端回调数组请使用complete方法
+		// 请求结束且请求失败时调用，支持传入请求失败原因
+		completeByError(errorMsg) {
+			this.customerEmptyViewErrorText = errorMsg;
+			return this.complete(false);
+		},
+		// 与上方complete方法功能一致，新版本中设置服务端回调数组请使用complete方法
 		addData(data, success = true) {
 			if (!this.fromCompleteEmit) {
 				this.disabledCompleteEmit = true;
@@ -273,7 +285,7 @@ export default {
 			}
 			const addDataDalay = (this.requestTimeStamp > 0 && disTime < minDelay) ? minDelay - disTime : 0;
 			this.$nextTick(() => {
-				setTimeout(() => {
+				u.delay(() => {
 					this._addData(data, success, false);
 				}, this.delay > 0 ? this.delay : addDataDalay)
 			})
@@ -282,34 +294,26 @@ export default {
 				this.dataPromiseResultMap.complete = { resolve, reject };
 			});
 		},
-		//从顶部添加数据，不会影响分页的pageNo和pageSize
+		// 从顶部添加数据，不会影响分页的pageNo和pageSize
 		addDataFromTop(data, toTop = true, toTopWithAnimate = true) {
-			let dataType = Object.prototype.toString.call(data);
-			if (dataType !== '[object Array]') {
-				data = [data];
-			}
+			data = Object.prototype.toString.call(data) !== '[object Array]' ? [data] : data.reverse();
+			// #ifndef APP-NVUE
+			this.finalUseVirtualList && this._setCellIndex(data, 'top')
+			// #endif
 			this.totalData = [...data, ...this.totalData];
 			if (toTop) {
-				setTimeout(() => {
-					this._scrollToTop(toTopWithAnimate);
-				}, c.delayTime)
+				u.delay(() => this._scrollToTop(toTopWithAnimate));
 			}
 		},
-		//重新设置列表数据，调用此方法不会影响pageNo和pageSize，也不会触发请求。适用场景：当需要删除列表中某一项时，将删除对应项后的数组通过此方法传递给z-paging。(当出现类似的需要修改列表数组的场景时，请使用此方法，请勿直接修改page中:list.sync绑定的数组)
+		// 重新设置列表数据，调用此方法不会影响pageNo和pageSize，也不会触发请求。适用场景：当需要删除列表中某一项时，将删除对应项后的数组通过此方法传递给z-paging。(当出现类似的需要修改列表数组的场景时，请使用此方法，请勿直接修改page中:list.sync绑定的数组)
 		resetTotalData(data) {
 			this.isTotalChangeFromAddData = true;
-			let dataType = Object.prototype.toString.call(data);
-			if (dataType !== '[object Array]') {
-				data = [data];
-			}
+			data = Object.prototype.toString.call(data) !== '[object Array]' ? [data] : data;
 			this.totalData = data;
 		},
-		//添加聊天记录
+		// 添加聊天记录
 		addChatRecordData(data, toBottom = true, toBottomWithAnimate = true) {
-			let dataType = Object.prototype.toString.call(data);
-			if (dataType !== '[object Array]') {
-				data = [data];
-			}
+			data = Object.prototype.toString.call(data) !== '[object Array]' ? [data] : data;
 			if (!this.useChatRecordMode) return;
 			this.isTotalChangeFromAddData = true;
 			//#ifndef APP-NVUE
@@ -319,21 +323,17 @@ export default {
 			this.totalData = this.nIsFirstPageAndNoMore ? [...this.totalData, ...data] : [...data, ...this.totalData];
 			//#endif
 			if (toBottom) {
-				setTimeout(() => {
+				u.delay(() => {
 					//#ifndef APP-NVUE
 					this._scrollToBottom(toBottomWithAnimate);
 					//#endif
 					//#ifdef APP-NVUE
-					if (this.nIsFirstPageAndNoMore) {
-						this._scrollToBottom(toBottomWithAnimate);
-					} else {
-						this._scrollToTop(toBottomWithAnimate);
-					}
+					this.nIsFirstPageAndNoMore ? this._scrollToBottom(toBottomWithAnimate) : this._scrollToTop(toBottomWithAnimate);
 					//#endif
-				}, c.delayTime)
+				})
 			}
 		},
-		//设置本地分页数据，请求结束(成功或者失败)调用此方法，将请求的结果传递给z-paging作分页处理（若调用了此方法，则上拉加载更多时内部会自动分页，不会触发@query所绑定的事件）
+		// 设置本地分页数据，请求结束(成功或者失败)调用此方法，将请求的结果传递给z-paging作分页处理（若调用了此方法，则上拉加载更多时内部会自动分页，不会触发@query所绑定的事件）
 		setLocalPaging(data, success = true) {
 			this.isLocalPaging = true;
 			this.$nextTick(() => {
@@ -343,13 +343,15 @@ export default {
 				this.dataPromiseResultMap.localPaging = { resolve, reject };
 			});
 		},
-		//重新加载分页数据，pageNo会恢复为默认值，相当于下拉刷新的效果(animate为true时会展示下拉刷新动画，默认为false)
+		// 重新加载分页数据，pageNo会恢复为默认值，相当于下拉刷新的效果(animate为true时会展示下拉刷新动画，默认为false)
 		reload(animate = this.showRefresherWhenReload) {
 			if (animate) {
 				this.privateShowRefresherWhenReload = animate;
 				this.isUserPullDown = true;
 			}
-			this.listRendering = true;
+			if (!this.showLoadingMoreWhenReload) {
+				this.listRendering = true;
+			}
 			this.$nextTick(() => {
 				this._preReload(animate, false);
 			})
@@ -357,45 +359,43 @@ export default {
 				this.dataPromiseResultMap.reload = { resolve, reject };
 			});
 		},
-		//刷新列表数据，pageNo和pageSize不会重置，列表数据会重新从服务端获取。必须保证@query绑定的方法中的pageNo和pageSize和传给服务端的一致
+		// 刷新列表数据，pageNo和pageSize不会重置，列表数据会重新从服务端获取。必须保证@query绑定的方法中的pageNo和pageSize和传给服务端的一致
 		refresh() {
-			if (!this.realTotalData.length) {
-				return this.reload();
-			}
-			const disPageNo = this.pageNo - this.defaultPageNo + 1;
-			if (disPageNo >= 1) {
-				this.loading = true;
-				this.privateConcat = false;
-				const totalPageSize = disPageNo * this.pageSize;
-				this.currentRefreshPageSize = totalPageSize;
-				this._emitQuery(this.defaultPageNo, totalPageSize, Enum.QueryFrom.Refresh);
-				this._callMyParentQuery(this.defaultPageNo, totalPageSize);
-			}
-			return new Promise((resolve, reject) => {
-				this.dataPromiseResultMap.reload = { resolve, reject };
-			});
+			return this._handleRefreshWithDisPageNo(this.pageNo - this.defaultPageNo + 1);
 		},
-		//手动更新列表缓存数据，将自动截取v-model绑定的list中的前pageSize条覆盖缓存，请确保在list数据更新到预期结果后再调用此方法
+		// 刷新列表数据至指定页，例如pageNo=5时则代表刷新列表至第5页，此时pageNo会变为5，列表会展示前5页的数据。必须保证@query绑定的方法中的pageNo和pageSize和传给服务端的一致
+		refreshToPage(pageNo) {
+			this.isHandlingRefreshToPage = true;
+			return this._handleRefreshWithDisPageNo(pageNo + this.defaultPageNo - 1);
+		},
+		// 手动更新列表缓存数据，将自动截取v-model绑定的list中的前pageSize条覆盖缓存，请确保在list数据更新到预期结果后再调用此方法
 		updateCache() {
 			if (this.finalUseCache && this.totalData.length) {
 				this._saveLocalCache(this.totalData.slice(0, Math.min(this.totalData.length, this.pageSize)));
 			}
 		},
-		//清空分页数据
+		// 清空分页数据
 		clean() {
 			this._reload(true);
 			this._addData([], true, false);
 		},
-		//清空分页数据
+		// 清空分页数据
 		clear() {
 			this.clean();
 		},
-		//手动触发滚动到顶部加载更多，聊天记录模式时有效
+		// 手动触发滚动到顶部加载更多，聊天记录模式时有效
 		doChatRecordLoadMore() {
 			this.useChatRecordMode && this._onLoadingMore('click');
 		},
-		//reload之前的一些处理
+		// reload之前的一些处理
 		_preReload(animate = this.showRefresherWhenReload, isFromMounted = true) {
+			const showRefresher = this.finalRefresherEnabled && this.useCustomRefresher;
+			// #ifndef APP-NVUE
+			if (this.customRefresherHeight === -1 && showRefresher) {
+				u.delay(() => this._preReload(animate, isFromMounted), c.delayTime / 2);
+				return;
+			}
+			// #endif
 			this.isUserReload = true;
 			this.loadingType = Enum.LoadingType.Refresher;
 			if (animate) {
@@ -410,15 +410,15 @@ export default {
 				// #ifdef APP-NVUE
 				this.refresherStatus = Enum.Refresher.Loading;
 				this.refresherRevealStackCount ++;
-				setTimeout(() => {
+				u.delay(() => {
 					this._getNodeClientRect('zp-n-refresh-container', false).then((node) => {
 						if (node) {
 							let nodeHeight = node[0].height;
 							this.nShowRefresherReveal = true;
 							this.nShowRefresherRevealHeight = nodeHeight;
-							setTimeout(() => {
+							u.delay(() => {
 								this._nDoRefresherEndAnimation(0, -nodeHeight, false, false);
-								setTimeout(() => {
+								u.delay(() => {
 									this._nDoRefresherEndAnimation(nodeHeight, 0);
 								}, 10)
 							}, 10)
@@ -434,7 +434,7 @@ export default {
 			}
 			this._reload(false, isFromMounted);
 		},
-		//重新加载分页数据
+		// 重新加载分页数据
 		_reload(isClean = false, isFromMounted = false, isUserPullDown = false) {
 			this.isAddedData = false;
 			this.insideOfPaging = -1;
@@ -453,9 +453,7 @@ export default {
 				// #ifdef MP-TOUTIAO
 				delay = 5;
 				// #endif
-				setTimeout(() => {
-					this._callMyParentQuery();
-				}, delay)
+				u.delay(this._callMyParentQuery, delay);
 				if (!isFromMounted && this.autoScrollToTopWhenReload) {
 					let checkedNRefresherLoading = true;
 					// #ifdef APP-NVUE
@@ -464,13 +462,13 @@ export default {
 					checkedNRefresherLoading && this._scrollToTop(false);
 				}
 			}
+			// #ifdef APP-NVUE
 			this.$nextTick(() => {
-				// #ifdef APP-NVUE
 				this.nShowBottom = this.realTotalData.length > 0;
-				// #endif
 			})
+			// #endif
 		},
-		//处理服务端返回的数组
+		// 处理服务端返回的数组
 		_addData(data, success, isLocal) {
 			this.isAddedData = true;
 			this.fromEmptyViewReload = false;
@@ -485,6 +483,14 @@ export default {
 			if (!isLocal && tempIsUserPullDown && this.isFirstPage) {
 				this.isUserPullDown = false;
 			}
+			if (!this.isFirstPage) {
+				this.listRendering = true;
+				this.$nextTick(() => {
+					u.delay(() => this.listRendering = false);
+				})
+			} else {
+				this.listRendering = false;
+			}
 			let dataTypeRes = this._checkDataType(data, success, isLocal);
 			data = dataTypeRes.data;
 			success = dataTypeRes.success;
@@ -493,12 +499,12 @@ export default {
 			if (this.useChatRecordMode) delayTime = 0;
 			// #endif
 			this.loadingForNow = false;
-			setTimeout(() => {
+			u.delay(() => {
 				this.pagingLoaded = true;
 				this.$nextTick(()=>{
 					!isLocal && this._refresherEnd(delayTime > 0, true, tempIsUserPullDown);
 				})
-			}, delayTime)
+			})
 			if (this.isFirstPage) {
 				this.isLoadFailed = !success;
 				this.$emit('isLoadFailedChange', this.isLoadFailed);
@@ -508,7 +514,7 @@ export default {
 			}
 			this.isSettingCacheList = false;
 			if (success) {
-				if (!(this.privateConcat === false && this.loadingStatus === Enum.More.NoMore)) {
+				if (!(this.privateConcat === false && !this.isHandlingRefreshToPage && this.loadingStatus === Enum.More.NoMore)) {
 					this.loadingStatus = Enum.More.Default;
 				}
 				if (isLocal) {
@@ -525,21 +531,29 @@ export default {
 						dataChangeDelayTime = 150;
 					}
 					// #endif
-					setTimeout(() => {
+					u.delay(() => {
 						this._currentDataChange(data, this.currentData);
 						this._callDataPromise(true, this.totalData);
 					}, dataChangeDelayTime)
+				}
+				if (this.isHandlingRefreshToPage) {
+					this.isHandlingRefreshToPage = false;
+					this.pageNo = this.defaultPageNo + Math.ceil(data.length / this.pageSize) - 1;
+					if (data.length % this.pageSize !== 0) {
+						this.customNoMore = 1;
+					}
 				}
 			} else {
 				this._currentDataChange(data, this.currentData);
 				this._callDataPromise(false);
 				this.loadingStatus = Enum.More.Fail;
+				this.isHandlingRefreshToPage = false;
 				if (this.loadingType === Enum.LoadingType.LoadingMore) {
 					this.pageNo --;
 				}
 			}
 		},
-		//所有数据改变时调用
+		// 所有数据改变时调用
 		_totalDataChange(newVal, oldVal, eventThrow=true) {
 			if ((!this.isUserReload || !this.autoCleanListWhenReload) && this.firstPageLoaded && !newVal.length && oldVal.length) {
 				return;
@@ -549,6 +563,7 @@ export default {
 				eventThrow = false;
 			}
 			this.realTotalData = newVal;
+			// emit列表更新事件
 			if (eventThrow) {
 				this.$emit('input', newVal);
 				// #ifdef VUE3
@@ -561,47 +576,43 @@ export default {
 			this.firstPageLoaded = false;
 			this.isTotalChangeFromAddData = false;
 			this.$nextTick(() => {
-				setTimeout(()=>{
+				u.delay(()=>{
+					// emit z-paging内容区域高度改变事件
 					this._getNodeClientRect('.zp-paging-container-content').then(res => {
-						if (res) {
-							this.$emit('contentHeightChanged', res[0].height);
-						}
+						res && this.$emit('contentHeightChanged', res[0].height);
 					});
-				},this.isIos ? 100 : 300)
+				}, c.delayTime * (this.isIos ? 1 : 3))
 				// #ifdef APP-NVUE
+				// 在nvue中，如果当前是聊天记录模式并且是第一页，则触发滚动到最底部
 				if (this.useChatRecordMode && this.nIsFirstPageAndNoMore && this.isFirstPage && !this.nFirstPageAndNoMoreChecked) {
 					this.nFirstPageAndNoMoreChecked = true;
 					this._scrollToBottom(false);
 				}
+				// 在nvue中延时600毫秒展示底部加载更多，避免底部加载更多太早加载闪一下的问题
+				u.delay(() => {
+					this.nShowBottom = true;
+				}, c.delayTime * 6, 'nShowBottomDelay');
 				// #endif
 			})
 		},
-		//当前数据改变时调用
+		// 当前数据改变时调用
 		_currentDataChange(newVal, oldVal) {
 			newVal = [...newVal];
-			if (!this.isFirstPage) {
-				this.listRendering = true;
-				this.listRenderingTimeout && clearTimeout(this.listRenderingTimeout);
-				this.$nextTick(() => {
-					this.listRenderingTimeout = setTimeout(() => {
-						this.listRendering = false;
-					}, c.delayTime)
-				})
-			} else {
-				this.listRendering = false;
-			}
 			// #ifndef APP-NVUE
-			this.finalUseVirtualList && this._setCellIndex(newVal, this.totalData.length === 0)
+			this.finalUseVirtualList && this._setCellIndex(newVal, 'bottom');
 			this.useChatRecordMode && newVal.reverse();
 			// #endif
 			if (this.isFirstPage && this.finalConcat) {
 				this.totalData = [];
 			}
+			// customNoMore：-1代表交由z-paging自行判断；1代表没有更多了；0代表还有更多数据
 			if (this.customNoMore !== -1) {
-				if (this.customNoMore === 1 || !newVal.length) {
+				// 如果customNoMore等于1 或者 customNoMore不是0并且新增数组长度为0(也就是不是明确的还有更多数据并且新增的数组长度为0)，则没有更多数据了
+				if (this.customNoMore === 1 || (this.customNoMore !== 0 && !newVal.length)) {
 					this.loadingStatus = Enum.More.NoMore;
 				}
 			} else {
+				// 如果新增的数据数组长度为0 或者 新增的数组长度小于默认的pageSize，则没有更多数据了
 				if (!newVal.length || (newVal.length && newVal.length < this.defaultPageSize)) {
 					this.loadingStatus = Enum.More.NoMore;
 				}
@@ -613,32 +624,40 @@ export default {
 						newVal.reverse();
 					}
 					// #endif
-					this.totalData = newVal;
 				}
+				this.totalData = newVal;
+				// 在vue中，如果是聊天记录模式，则触发滚动到底部，此处延时滚动到底部是为了解决在非页面滚动情况下即使加了nextTick也可能出现的最新数据未完全渲染从而导致滚动到底部位置不正确的问题
 				if (this.useChatRecordMode) {
 					// #ifndef APP-NVUE
-					this.$nextTick(() => {
-						this._scrollToBottom(false);
-					})
+					u.delay(() => {
+						this.$nextTick(() => {
+							this._scrollToBottom(false);
+						})
+					}, this.usePageScroll ? 0 : 10)
 					// #endif
 				}
 			} else {
+				// 聊天记录模式
 				if (this.useChatRecordMode) {
 					// #ifdef APP-NVUE
+					// 在nvue中，即使聊天记录模式是在顶部拼接数据，依然是将新数据拼接在旧数据之后，因为在nvue+聊天记录模式中，将列表旋转了180度
 					this.totalData = [...this.totalData, ...newVal];
 					// #endif
 					//#ifndef APP-NVUE
 					const idIndex = newVal.length;
 					let idIndexStr = `z-paging-${idIndex}`;
+					// 在vue中，需要将新数据拼接在旧数据之前
 					this.totalData = [...newVal, ...this.totalData];
+					// 在非nvue的平台，并且是加载下一页的情况，由于加载下一页之后会默认滚动到最顶部，因此此时需要通过代码将列表滚动回当前加载的位置
+					// 在nvue平台中将列表旋转了180度，因此滚动到顶部加载更多等同于滚动到底部加载更多，则无此问题
 					if (this.pageNo !== this.defaultPageNo) {
 						this.privateScrollWithAnimation = 0;
 						this.$emit('update:chatIndex', idIndex);
-						setTimeout(() => {
-							this._scrollIntoView(idIndexStr, 30 + Math.max(0, this.cacheTopHeight), false, () => {
+						this.$nextTick(() => {
+							this._scrollIntoView(idIndexStr, 30 + this.finalChatRecordMoreOffset + Math.max(0, this.cacheTopHeight), false, () => {
 								this.$emit('update:chatIndex', 0);
 							});
-						}, this.usePageScroll ? this.isIos ? 50 : 100 : 200)
+						})
 					} else {
 						this.$nextTick(() => {
 							this._scrollToBottom(false);
@@ -650,10 +669,11 @@ export default {
 					if (this.finalConcat) {
 						const currentScrollTop = this.oldScrollTop;
 						this.totalData = [...this.totalData, ...newVal];
+						// 此处是为了解决在微信小程序中，在某些情况下滚动到底部加载更多后滚动位置直接变为最底部的问题，因此需要通过代码强制滚动回加载更多前的位置
 						// #ifdef MP-WEIXIN
 						if (!this.isIos && !this.refresherOnly && !this.usePageScroll && newVal.length) {
 							this.loadingMoreTimeStamp = u.getTime();
-							this.$nextTick(()=>{
+							this.$nextTick(() => {
 								this.scrollToY(currentScrollTop);
 							})
 						}
@@ -665,7 +685,30 @@ export default {
 			}
 			this.privateConcat = true;
 		},
-		//本地分页请求
+		// 根据pageNo处理refresh操作
+		_handleRefreshWithDisPageNo(pageNo) {
+			if (!this.isHandlingRefreshToPage && !this.realTotalData.length) return this.reload();
+			if (pageNo >= 1) {
+				this.loading = true;
+				this.privateConcat = false;
+				const totalPageSize = pageNo * this.pageSize;
+				this.currentRefreshPageSize = totalPageSize;
+				// 如果是本地分页，则在组件内部自己处理分页逻辑，不emit query相关事件
+				if (this.isLocalPaging && this.isHandlingRefreshToPage) {
+					this._localPagingQueryList(this.defaultPageNo, totalPageSize, 0, res => {
+						this.complete(res);
+					})
+				} else {
+					// emit query相关事件
+					this._emitQuery(this.defaultPageNo, totalPageSize, Enum.QueryFrom.Refresh);
+					this._callMyParentQuery(this.defaultPageNo, totalPageSize);
+				}
+			}
+			return new Promise((resolve, reject) => {
+				this.dataPromiseResultMap.reload = { resolve, reject };
+			});
+		},
+		// 本地分页请求
 		_localPagingQueryList(pageNo, pageSize, localPagingLoadingTime, callback) {
 			pageNo = Math.max(1, pageNo);
 			pageSize = Math.max(1, pageSize);
@@ -673,18 +716,18 @@ export default {
 			const pageNoIndex = (pageNo - 1) * pageSize;
 			const finalPageNoIndex = Math.min(totalPagingList.length, pageNoIndex + pageSize);
 			const resultPagingList = totalPagingList.splice(pageNoIndex, finalPageNoIndex - pageNoIndex);
-			setTimeout(() => callback(resultPagingList), localPagingLoadingTime)
+			u.delay(() => callback(resultPagingList), localPagingLoadingTime)
 		},
-		//存储列表缓存数据
+		// 存储列表缓存数据
 		_saveLocalCache(data) {
 			uni.setStorageSync(this.finalCacheKey, data);
 		},
-		//通过缓存数据填充列表数据
+		// 通过缓存数据填充列表数据
 		_setListByLocalCache() {
 			this.totalData = uni.getStorageSync(this.finalCacheKey) || [];
 			this.isSettingCacheList = true;
 		},
-		//修改父view的list
+		// 修改父view的list
 		_callMyParentList(newVal) {
 			if (this.autowireListName.length) {
 				const myParent = u.getParent(this.$parent);
@@ -693,7 +736,7 @@ export default {
 				}
 			}
 		},
-		//调用父view的query
+		// 调用父view的query
 		_callMyParentQuery(customPageNo = 0, customPageSize = 0) {
 			if (this.autowireQueryName) {
 				if (this.myParentQuery === -1) {
@@ -703,42 +746,38 @@ export default {
 					}
 				} 
 				if (this.myParentQuery !== -1) {
-					if (customPageSize > 0) {
-						this.myParentQuery(customPageNo, customPageSize);
-					} else {
-						this.myParentQuery(this.pageNo, this.defaultPageSize);
-					}
+					customPageSize > 0 ? this.myParentQuery(customPageNo, customPageSize) : this.myParentQuery(this.pageNo, this.defaultPageSize);
 				}
 			}
 		},
-		//emit query事件
+		// emit query事件
 		_emitQuery(pageNo, pageSize, from){
 			this.queryFrom = from;
 			this.requestTimeStamp = u.getTime();
-			this.$emit('query', ...interceptor._handleQuery(pageNo, pageSize, from));
+			const [lastItem] = this.realTotalData.slice(-1);
+			this.$emit('query', ...interceptor._handleQuery(pageNo, pageSize, from, lastItem || null));
 		},
-		//触发数据改变promise
+		// 触发数据改变promise
 		_callDataPromise(success, totalList) {
 			for (const key in this.dataPromiseResultMap) {
 				const obj = this.dataPromiseResultMap[key];
-				success ? (!!obj && obj.resolve({ totalList, noMore: this.loadingStatus === Enum.More.NoMore })) : (!!obj && obj.reject());
+				if (!obj) continue;
+				success ? obj.resolve({ totalList, noMore: this.loadingStatus === Enum.More.NoMore }) : this.callNetworkReject && obj.reject(`z-paging-${key}-error`);
 			}
 		},
-		//检查complete data的类型
+		// 检查complete data的类型
 		_checkDataType(data, success, isLocal) {
 			const dataType = Object.prototype.toString.call(data);
 			if (dataType === '[object Boolean]') {
 				success = data;
 				data = [];
-			} else if (dataType === '[object Null]') {
-				data = [];
 			} else if (dataType !== '[object Array]') {
 				data = [];
-				if (dataType !== '[object Undefined]') {
+				if (dataType !== '[object Undefined]' && dataType !== '[object Null]') {
 					u.consoleErr(`${isLocal ? 'setLocalPaging' : 'complete'}参数类型不正确，第一个参数类型必须为Array!`);
 				}
 			}
-			return {data,success};
+			return { data, success };
 		},
 	}
 }

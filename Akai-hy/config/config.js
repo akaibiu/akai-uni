@@ -1,11 +1,12 @@
 // 此处代码为应用全局配置代码。如果有错误或者需要优化的地方，请联系作者。(baseUrl为必填项、appid最好填上(后面也许会有从config获取appid的函数功能));
+
 module.exports = {
-  baseUrl: 'https://www.zhihu.com',   // 模拟地址 测试下拉刷新(必填项)
+  baseUrl: 'https://www.zhihu.com',   // 模拟请求地址 测试下拉刷新会用到
   // 应用信息
   appInfo: {
     // 应用名称(可不填)
     name: "Akaixz",
-	// APPID testing(必填项，若不填后面有can not read 'xxx' function of undefinde 报错，请联系作者解答疑惑)
+	// APPID testing(必填项，若不填后面有can not read 'xxx' function of undefined 报错，请联系作者解答疑惑)
 	appid:'全局配置的appid', 
     // 应用版本(可不填)
     version: "1.0.0",

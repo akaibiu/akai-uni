@@ -2,15 +2,15 @@
 	"easycom": {
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	 //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
 		{
-		    "path" : "pages/mine/mine",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "",
-		        "enablePullDownRefresh": false,
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
 				"navigationStyle": "custom"
-		    }
+			}
 		}, {
 			"path": "pages/job/job",
 			"style": {
@@ -18,7 +18,7 @@
 				"enablePullDownRefresh": false
 			}
 
-		},{
+		}, {
 			"path": "pages/func/func",
 			"style": {
 				"navigationBarTitleText": "功能",
@@ -30,145 +30,159 @@
 				"navigationStyle": "default",
 				"navigationBarTitleText": "Mikuya"
 			}
-		}, {
-			"path": "pages/func/refresh/refresh",
-			"style": {
-				"navigationBarTitleText": "刷新",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/func/personalSetting/personalSetting",
-			"style": {
-				"navigationBarTitleText": "个人信息设置",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/func/swiperTab/swiperTab",
-			"style": {
-				"navigationBarTitleText": "全屏轮播带选项卡",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/func/techSupport/techSupport",
-			"style": {
-				"navigationBarTitleText": "技术支持",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/func/Flex/Flex",
-			"style": {
-				"navigationBarTitleText": "Flex完美布局",
-				"enablePullDownRefresh": false
-			}
 		}
-
-		, {
-			"path": "pages/func/card/card",
+	],
+	//进入主包pages下的func页面时，加载分包important
+	"preloadRule": {
+		"pages/func/func": {
+			"network": "all",
+			"packages": ["pagesFunc"]
+		}
+	},
+	"subPackages": [{
+		"root": "pagesFunc",
+		"name": "pagesFunc",
+		"independent": false, // 设置为独立分包 一般默认为false
+		"pages": [{
+			//path最前面不需要 斜杆 /
+			"path": "card",
 			"style": {
 				"navigationBarTitleText": "卡片",
 				"enablePullDownRefresh": false
 			}
-
 		}, {
-			"path": "pages/func/records/records",
+			"path": "flex",
 			"style": {
-				"navigationBarTitleText": "记录列表",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/func/lodash/lodash",
-			"style": {
-				"navigationBarTitleText": "lodash",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/func/scrollBox/scrollBox",
-			"style": {
-				"navigationBarTitleText": "横向滚动",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/func/music/music",
-			"style": {
-				"navigationBarTitleText": "陈一发",
-				"enablePullDownRefresh": false,
-				"navigationBarBackgroundColor": "#000",
-				"navigationBarTextStyle": "white"
-			}
-
-		}, {
-			"path": "pages/func/searchNav/searchNav",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom"
-			}
-
-		}, {
-			"path": "pages/func/shakeINput/shakeINput",
-			"style": {
-				"navigationBarTitleText": "抖动输入框",
+				"navigationBarTitleText": "flex布局",
 				"enablePullDownRefresh": false
 			}
 		}, {
-			"path": "pages/func/ladderShape/ladderShape",
+			"path": "gradientText",
+			"style": {
+				"navigationBarTitleText": "渐变文字",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "halfCircle",
+			"style": {
+				"navigationBarTitleText": "半圆案例",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "ladderShape",
 			"style": {
 				"navigationBarTitleText": "梯形",
 				"enablePullDownRefresh": false
 			}
 		}, {
-			"path": "pages/func/halfCircle/halfCircle",
+			"path": "ladderShapeTwo",
 			"style": {
-				"navigationBarTitleText": "半圆",
+				"navigationBarTitleText": "梯形选项卡",
 				"enablePullDownRefresh": false
 			}
 		}, {
-			"path": "pages/index/goodsDetail/goodsDetail",
+			"path": "lodash",
+			"style": {
+				"navigationBarTitleText": "lodash使用",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "personalSetting",
+			"style": {
+				"navigationBarTitleText": "个人设置",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "records",
+			"style": {
+				"navigationBarTitleText": "记录",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "refresh",
+			"style": {
+				"navigationBarTitleText": "下拉刷新",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "scrollBox",
+			"style": {
+				"navigationBarTitleText": "横向滚动",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "searchNav",
+			"style": {
+				"navigationBarTitleText": "搜索导航栏",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "shakeINput",
+			"style": {
+				"navigationBarTitleText": "摇动的输入框",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "sign",
+			"style": {
+				"navigationBarTitleText": "积分签到",
+				"navigationBarBackgroundColor": "#3da2fe",
+				"enablePullDownRefresh": false,
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "swiperTab",
+			"style": {
+				"navigationBarTitleText": "全屏轮播带选项卡",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "techSupport",
+			"style": {
+				"navigationBarTitleText": "技术支持",
+				"enablePullDownRefresh": false
+			}
+		}]
+	}, {
+		"root": "pagesJob",
+		"name": "pagesJob",
+		"independent": false, //设置为独立分包
+		"pages": [{
+			"path": "jobDetail",
+			"style": {
+				"navigationBarTitleText": "职位详情",
+				"enablePullDownRefresh": false
+			}
+		}]
+	}, {
+		"root": "pagesIndex",
+		"name": "pagesIndex",
+		"independent": false, //设置为独立分包
+		"pages": [{
+			"path": "goodsDetail",
 			"style": {
 				"navigationBarTitleText": "商品详情",
 				"enablePullDownRefresh": false
 			}
 		}, {
-			"path": "pages/index/release/release",
+			"path": "release",
 			"style": {
 				"navigationBarTitleText": "发布闲置",
 				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/job/jobDetail/jobDetail",
+		}]
+	}, {
+		"root": "pagesMine",
+		"name": "pagesMine",
+		"independent": false, //设置为独立分包
+		"pages": [{
+			"path": "mineChild",
 			"style": {
-				"navigationBarTitleText": "职位详情",
+				"navigationBarTitleText": "我的页面详情",
 				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/func/ladderShapeTwo/ladderShapeTwo",
-			"style": {
-				"navigationBarTitleText": "梯形选项卡",
-				"enablePullDownRefresh": false
-			}
-		}
-        ,{
-            "path" : "pages/func/gradientText/gradientText",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "渐变文字",
-                "enablePullDownRefresh": false
-            }
-        }
-        ,{
-            "path" : "pages/func/sign/sign",
-            "style" :                                                                                    
-            {
-               "navigationBarTitleText": "积分签到",
-               "navigationBarBackgroundColor": "#3da2fe",
-               "enablePullDownRefresh": false,
-               "navigationBarTextStyle": "white"
-            }
-        }
-    ],
+		}]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "Mikuya",
@@ -205,6 +219,5 @@
 				"text": "我的"
 			}
 		]
-	},
-	"uniIdRouter": {}
+	}
 }

@@ -292,7 +292,7 @@
 			// 签到
 			goSignIn(){
 				uni.navigateTo({
-					url:'/pages/mine/sign/sign'
+					url:"/pagesMine/sign/sign"
 				})
 			},
 			// 收货地址
@@ -306,67 +306,67 @@
 			// 提现模板
 			goCash(){
 				uni.navigateTo({
-					url:'/pages/mine/cashOut/cashOut'
+					url:'/pagesMine/cashOut/cashOut'
 				})
 			},
 			// lodash
 			goLodash(){
 				uni.navigateTo({
-					url:"/pages/mine/lodash/lodash"
+					url:"/pagesMine/lodash/lodash"
 				})
 			},
 			// 壁纸首页
 			goDiscover() {
 				uni.navigateTo({
-					url: '/pages/mine/discovery/discovery'
+					url: '/pagesMine/discovery/discovery'
 				})
 			},
 			// 关于作者
 			goAboutMe() {
 				uni.navigateTo({
-					url: '/pages/mine/me/me'
+					url: '/pagesMine/me/me'
 				})
 			},
 			// 自定义导航栏教程
 			goNav() {
 				uni.navigateTo({
-					url: '/pages/mine/navSearch/navSearch'
+					url: '/pagesMine/navSearch/navSearch'
 				})
 			},
 			// 刷新记录模板
 			goRecords() {
 				uni.navigateTo({
-					url: '/pages/mine/records/records'
+					url: '/pagesMine/records/records'
 				})
 			},
 			// FLex完美布局
 			goFlex() {
 				uni.navigateTo({
-					url: '/pages/mine/Flex/Flex'
+					url: '/pagesMine/flex/flex'
 				})
 			},
 			// 简约登录
 			goLogin() {
 				uni.navigateTo({
-					url: '/pages/mine/login/login'
+					url: '/pages/loginA/loginA'
 				})
 			},
 			// 普通登录
 			goLoginS(){
 				uni.navigateTo({
-					url:'/pages/mine/login-s/login-s'
+					url:'/pagesMine/login/login'
 				})
 			},
 			// 订单列表模板
 			goOrder() {
 				uni.navigateTo({
-					url: '/pages/mine/order/order'
+					url: '/pagesMine/order/order'
 				})
 			},
 			// 表单编辑
 			goForm() {
 				uni.navigateTo({
-					url: '/pages/mine/form/form'
+					url: '/pagesMine/form/form'
 				})
 			},
 			//拨打固定电话

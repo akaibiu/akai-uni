@@ -44,27 +44,6 @@ const request = config => {
 		url = url.slice(0, -1)
 		config.url = url
 	}
-	/**
-	 * @description  添加请求拦截器
-	 */
-	request.interceptors.request.use((config) => {
-		// You can do anything before request!
-		console.log('Before Request');
-		return config;
-	}, (error) => {
-		// Throw error！
-		return Promise.reject(error);
-	});
-	/**
-	 * @description  添加响应拦截器
-	 */
-	request.interceptors.response.use((response) => {
-		// You can do anything after request!
-		console.log('After Request');
-	}, (error) => {
-		// Thorw error!
-		return Promise.reject(error);
-	});
 	return new Promise((resolve, reject) => {
 		uni.request({
 			method: config.method || 'get',

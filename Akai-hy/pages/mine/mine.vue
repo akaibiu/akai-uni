@@ -30,7 +30,7 @@
 				</view>
 				<view class="radio">
 					<text>15s''</text>
-					<image src="../../static/mine/radio.png" class="rIcon" mode=""></image>
+					<image src="@/static/mine/radio.png" class="rIcon" mode=""></image>
 				</view>
 			</view>
 			<view class="user">
@@ -133,11 +133,11 @@
 						</view>
 						<view class="zp">
 							<view class="zpItem">
-								<image src="../../static/mine/hot.png" mode=""></image>
+								<image src="@/static/mine/hot.png" mode=""></image>
 								<text>{{item.hot}}</text>
 							</view>
 							<view class="zpItem">
-								<image src="../../static/mine/zan.png" mode=""></image>
+								<image src="@/static/mine/zan.png" mode=""></image>
 								<text>{{item.zan}}</text>
 							</view>
 						</view>
@@ -150,7 +150,7 @@
 							<view class="item" v-for="(val,valin) in item.photoList.slice(0,9)" :key="valin">
 								<image :src="val.img" class="photoImg" mode=""></image>
 								<view class="more" v-if="item.photoList.length>9&&valin==8">
-									<image src="../../static/images/add.png" class="addIcon" mode="aspectFill"></image>{{item.photoList.length-9}}
+									<image src="@/static/mine/add.png" class="addIcon" mode="aspectFill"></image>{{item.photoList.length-9}}
 								</view>
 							</view>
 						</view>
@@ -241,6 +241,7 @@
 		},
 		onShow() {
 			console.log(this.vuex_frenidList,'测试打印存储在状态机的数据-vuex_frenidList')
+			console.log(getApp().globalData.config);
 		},
 		onLoad(options) {
 			// 获取手机系统信息(包括状态栏高度等等，但是info.capsuleHeight已经被废弃了 )
@@ -286,7 +287,12 @@
 				}
 			},
 			goBack(){
-				this.tool.toastTip('回不去了...','none',1500)
+				this.tool.toastTip('回不去了...','none',1000)
+				setTimeout(function() {
+					uni.navigateTo({
+						url:'/pagesMine/mineChild'
+					})
+				}, 1000);
 			},
 		}
 	}

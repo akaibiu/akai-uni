@@ -1,85 +1,111 @@
-## 亮点介绍
+### 初次见面！🌷
 
-### **TuniaoUi** 是基于uni-app进行开发的UI框架，提供丰富的组件快速开发，已支持H5、微信小程序和APP，并且提供丰富的酷炫页面模板。
-### **Z-paging** 支持全平台兼容，支持自定义下拉刷新、上拉加载更多，支持虚拟列表，支持自动管理空数据图、点击返回顶部，支持聊天分页、本地分页，支持展示最后更新时间，支持国际化等等。
-*      [TuniaoUi-Dcloud地址](https://ext.dcloud.net.cn/search?q=%E5%9B%BE%E9%B8%9F)
-*      [图鸟官方使用文档教程](https://docs.ahuaaa.cn/)
-*      解锁图鸟更多精彩，享用更多模板，会员购买咨询微信：**tnkewo**
-*      [z-paging官方文档](https://z-paging.zxlee.cn/)
-*      [z-paging-Dcloud下载地址](https://ext.dcloud.net.cn/plugin?id=3935)
-*      此模板已集成`TuniaoUi`、`z-paging`、`lodash.js`、`animate.css`等强大UI以及js功能库。
-*      模板包含请求封装、token无痛刷新、公共js功能函数封装、页面模板、公共配置封装。
+<font color="#0000dd">Halo! 😊</font><br /> 
+<font color="#dd0000">感谢您选择 Akai-xz 的 uniApp 前端项目模板！</font><br /> 
+<font color="#00dddd">此模板只是为您提供了一个简单而有力的起点。但开发过程中仍离不开您的创意和努力，希望这份代码能成为您创作的画布，让您的想象力在这里自由绽放!</font><br /> 
+*** 
+
+#### 集成**TuniaoUi** ，它是基于uni-app进行开发的UI框架，提供丰富的组件和丰富的酷炫页面模板方便您快速开发，已支持H5、微信小程序和APP。全面的组件和便捷的工具会让您信手拈来，如鱼得水。
+#### 集成**Z-paging** 支持全平台兼容，支持自定义下拉刷新、上拉加载更多，支持虚拟列表，支持自动管理空数据图、点击返回顶部，支持聊天分页、本地分页，支持展示最后更新时间，支持国际化等等。
+#### 集成**animate.css**动效库，让您在小程序开发的过程也能实现炫酷的特效！
+#### 集成**lodash.js**库，您可以在开发过程中方便的处理一下数据(例如防抖、节流、二维数组转换...)
+#### uni.request、uni.upload请求的三层封装，API封装以及页面导入使用及无痛刷新token，让代码更优雅，请求更便捷。
+#### 封装了一些常用的功能函数，例如参数转换、时间转换、toast提示、断网提示、confirm确认等。
+#### 此模板提供一个全局的config.js，包含项目的一些公共配置(例如:appid、sign、appKey、appSecret、url)等，可供全局访问。
+#### 提供了一些常用的页面模板以及布局实例，包含自定义导航栏、梯形选项卡、scroll-box还有下拉刷新上拉加载页面实例模板！
+#### 为避免模板项目大小超包,阿凯已为您提前做好分包(包括组件按需加载、分包预加载、图片分包)
 ***
 
-
-### 其他指引
-[![version](https://img.shields.io/badge/version-2.4.8-blue)](https://github.com/SmileZXLee/uni-z-paging)
-*  [个人博客访问地址(博客收录，每日学习，面试笔记，踩坑防坑请查阅)](https://salephine.asia)
-*  [开源博客项目Gitee地址](https://gitee.com/AkaiBlog/akai-blog)
-*  [开源博客项目Github地址](https://github.com/akaibiu/akaibui.github.io)
-*  [此模板Gitee代码仓库地址](https://gitee.com/AkaiBlog/akai-uni)
-*  [uView2.0+Tuniao-UI加强版本地址](https://ext.dcloud.net.cn/plugin?id=10877).
-*  [uView2.0普通版本地址](https://ext.dcloud.net.cn/plugin?id=10882).
+### 协议指引 📔
+*  [![license](https://img.shields.io/badge/version-11.29-plum)](https://en.wikipedia.org/wiki/MIT_License)
+*  [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/akaibiu)
+*  [🌺](https://salephine.asia)
 ***
 
-### 功能&特点
-*  敏捷开发，集成`TuniaoUi`、`z-paging`高性能刷新组件。
-*  集成了`animate.css`动画库，并附有使用案例。
-*  集成了lodash.js工具库，并附有使用案例。
-*  `axios`三层封装,让代码更优雅，请求更便捷。用户达到下载即使用!
-*  请求封装包括是否携带`token`请求头设置,并加入请求拦截和响应拦截。
-*  请求封装已实现`无感刷新token`,已请求拦截和响应拦截。(具体使用需要结合自身业务，建议在使用之前先查看request目录下的request-s.js文件)
-*  新增request请求无感刷新token!!!
-*  目前拥有Tuniao-Ui的三个模板页，后续页面模板会不断更新。
-*  加入自己项目所用到的一些页面，(表单、登录、个人信息、`刷新加载`、`全屏滚动`)等。
-*  后续会封装一些好看的组件供使用。(会包含卡片、按钮、单选框、开关、输入框、加载器、`Flex完美布局`等)，敬请期待吧!
-*  平台目前仅测试过`微信小程序`和`H5`，其他平台谨慎使用，如有疑惑联系我!   
-***
+### 使用说明 📖
 
-### 答疑解惑骚扰作者，技术交流群:**531573361**
-<img src="https://mp-544a8cd9-03b3-41fd-9f50-daa7de994b60.cdn.bspapp.com/cloudstorage/8c467fb0-5827-448f-94c0-87f428f9c8eb.jpg" width="200" /><img src="https://mp-544a8cd9-03b3-41fd-9f50-daa7de994b60.cdn.bspapp.com/cloudstorage/b6630d78-0859-4f50-a6b6-1d6c73b8b375.jpg" width="200"/>
-*  QQ:**1494598731**
-*  Wechat(24小时在线、秒回)  **Akaibiu**
-***
+>  Akai-xz 的使用说明我会尽可能的详细，以便您阅读使用！若有辞藻尚未得体之处，请联系我修改！
 
-### 使用说明
-* [使用说明在线文档](https://salephine.asia)
-* 1.下载插件，更改项目名称(包含package.json里的项目名称)
-* 2.下载项目所需依赖(若无包管理文件需要先初始化包管理文件)<br />&ensp;&ensp;&ensp;1.有包管理文件执行`npm install` /  `npm i` / `yarn` <br />&ensp;&ensp;&ensp;2.无包管理文件执行`npm init -y` / `yarn` 之后再执行 `npm install` /  `npm i` / `yarn`
-* 3.下载完成之后直接运行即可。
-* 4.关于页面配置(若您有不需要的页面模板等，直接删除即可，同时记得删除掉page.json的页面配置代码)
-* 5.关于请求封装和token携带都已写好(pages/mine/mine.vue有示例请求)。
-* 6.若您还有些许疑问。请您加我微信`**Akaibiu**`,我会为您一对一解答。
-***
+#### 1.首先您需要下载插件压缩包或者直接通过Hbuilder快速导入项目
+* 导入项目之后您需要在此项目根目录初始化项目或下载依赖
+* 您可通过`yarn init -y`或`npm init -y`来初始化项目(Tips:默认是不需要初始化项目的奥)
+* 然后您再使用`yarn`或`npm install`或`npm i`下载Akai-xz项目所需要的依赖包
+* 下载完成之后您可以此项目内的`package.json`或`node_modules`中查看该项目所需依赖
+#### 2.更改项目的一些配置信息(项目名)
+* 更改`package.json`文件中的`name`
+* 更改`manifedt`文件中的`name`属性
+* 更改`page.json`文件中的`globalStyle`配置
+* 若您可忽略这些，也可直接跳过此步骤。
+#### 3.点击Hbuilder开发工具左上角，直接运行即可！
+#### 4.若您认为项目内有过多页面或一些功能函数，您可选择性删除!
 
-
-### 其他说明
-*  温馨提示：若Tuniao_Ui或者模板在使用中遇到问题可向我咨询。z-paging使用若遇到问题请详阅文档(阅读文档可解决99.99%的问题)。
-*  若项目拉取下来没有uni-modules目录或者uni-modules目录下没有z-paging目录的时候，需在插件市场导入z-paging
+### 项目内部分模块使用说明 🎺
+#### 1.z-paging说明
+* `z-paging`是属于`uni_modules`插件，存在于项目根目录下的`uni_modules`文件夹中。您可选中z-paging右键更新或执行其他操作。
+* 若项目拉取下来没有`uni-modules`目录或者`uni-modules`目录下没有`z-paging`目录的时候，需在插件市场导入`z-paging`。
 *  [z-paging插件网址](https://ext.dcloud.net.cn/plugin?id=3935),点击`使用HbuilderX导入插件`按钮导入到刚才创建的项目。
-*  若您需要集成uView2.0的版本，请移步至[uView2.0版本插件模板](https://ext.dcloud.net.cn/plugin?id=10877)
-*  下载之后更改项目名称,下载所需依赖。
-*  删除所不需要的文件夹或者没有用到的静态资源,例如`TODO`文件夹。
-*  服务器地址再`config`文件夹里面配置。
-*  如果需要`token`在`request`文件夹配置。另外在`axios`请求第二层封装也应该去设置`isToken`为true。
-*  关于接口请求示例代码在`pages/mine/mine.vue`文件有示例代码(1.引入第二层封装的api函数，2.使用)。
-*  关于`animate.css`库的使用以及注意事项在`App.vue`文件和`static/animate`文件中已体现，使用案例在`pages/mine/mine.vue`文件有示例代码。
-*  关于`utils`文件的公共配置js文件，已全局挂载，如需使用查看改文件暴露函数即可，若您想封装一些全新的，也可参考此文件。`(this.tool.toastTip('小周要开心','none',1020))`。
-*  !!!导入之后请查看`main.js`文件和`App.vue`文件，里面有关于`全局config`和`tool`的挂载引入。可在全局使用该配置信息。
-*  `Tuniao-Ui`高性能多平台组件模板期待感谢您的使用(vue3版本官方也即将蓄势待发)[图鸟官方使用文档教程](https://docs.ahuaaa.cn/)
-*  `z-paging`高性能全平台兼容刷新和加载插件期待您的使用(兼容vue2、vue3)。[z-paging官方文档](https://z-paging.zxlee.cn/)   
+* z-paging的`下拉刷新`和`上拉加载`案例在`pagesMine/refresh/refresh.vue`中有示例代码！并在此文件中附有详细说明。
+* 若您希望有一些其他的案例，详情请查阅[z-paging官方文档👉](https://z-paging.zxlee.cn)，也可加入z-paging的官方交流群进行咨询解惑[371624008](https://jq.qq.com/?_wv=1027&k=vU2fKZZH)
+#### 2.animate.css说明
+* 您无需单独下载animate.css,我已将您需要的文件都已集成。
+* 在项目根目录下`static/animate`文件夹中的`animate.css`便是我们使用animate动画的主要文件了。
+* 您可确认animate.css文件中的`:root`选择器是否已被命名为`page`。(注：:root选择器在小程序中不生效!!!)
+* 在项目根目录下的`App.vue`文件中，使用`@import '@/static/animate/animate.css';`将animate.css全局引入!
+* 通过给元素设置类名来使用animate.css动画特效。例如`animate__animated animate__heartBeat`，其中`animate__animated`是不可或缺的一部分，而`animate__heartBeat`则是动效的运作方式。
+* 在`pagesMine/login/login.vue`中，有关于animate.css的使用，您可以在style中根据类名设置运行规律以及持续时间。
+* 您可以查阅[animate.css](https://animate.style/)文档获取更多特效案例。
+#### 3.lodash.js说明
+* 在`pagesMine/lodash/lodash.vue`文件中有关于lodash的简单实用案例说明。
+* 详情可查阅[lodash.js官方文档](https://www.lodashjs.com/)
+#### 4.request请求说明
+* 在项目根目录下的`request/request.js`文件夹中有关于项目的请求封装。其中`request-s.js`是带有`无痛刷新token`功能的。
+* 您可以在上面两个文件夹中修改一些配置其中包括请求前后的loading、请求头的配置等。(此文件都已有详细的说明!)
+* 在项目根目录的`apis`文件夹中用户管理和存放咱么项目功能模块的请求，其中包括多种请求方式的编写示例以及说明。
+* 在`pagesFunc`文件夹中的`refresh.js`文件中有请求示例代码。
+```javascript
+	onShow(){
+		const param={name:'cy',age:23,city:'南京'};
+		zhiHuHotListApi(param).then(res=>{
+			console.log(res);
+		}).catch(err=>{
+			console.log(err);
+		})
+	}
+```
+#### 5.upload上传功能
+* 在项目根目录下的`upload/upload.js`文件夹中有关于项目的上传封装。和请求封装类似。
+#### 6.关于项目分包，您可完全按照我当前设计的来分包仅需要更改page.json中文件名字即可。
+#### 7.关于公共函数的使用。`utils/auth.js`或者`utils/common.js`
+* common.js文件已在main.js全局挂载，您可以通过`this.tool.xxx()`来使用里面的功能函数，例如`this.tool.toastTip('Akai','success',1030)`
+#### 8.公共配置文件congfig.js的使用。
+* `config/config.js`文件已在App.vue文件夹中引入并且挂载于globalData上，您可通过`getApp().globalData.config`来访问挂载的config配置对象。
+#### 9.vuex状态机的使用(store文件夹和vuex_tool文件夹不可以删除奥)
+* 使用的时候请先查看`store/index.js`文件(此文件有详细使用说明)，需要在state中设置咱们需要存储的字段。一般以`vuex_frenidName`这种形式。例如以下
+```javascript
+state: {
+		// ！！！以下就是您需要存在状态机的字段
+		vuex_frenidName: null, 
+		vuex_girlName:'晨阳'
+	},
+```
+* 在其他地方可以通过`this.vuex.frenidName`来访问存在vuex的变量。
+* 如果您需要重新赋值或者设置新的值，赋值`this.vuex('frenidName','阿凯')`。修改`this.vuex('girlName','CY')`
+***
+#### 10.关于TuniaoUi，请查阅官方文档！
+* [图鸟UI官网文档](https://doc.ahuaaa.cn/)，或加入官方交流群！
+### 答疑解惑技术交流反馈 🧸
+<img src="https://mp-544a8cd9-03b3-41fd-9f50-daa7de994b60.cdn.bspapp.com/cloudstorage/8c467fb0-5827-448f-94c0-87f428f9c8eb.jpg" width="200" /><img src="https://mp-544a8cd9-03b3-41fd-9f50-daa7de994b60.cdn.bspapp.com/cloudstorage/b6630d78-0859-4f50-a6b6-1d6c73b8b375.jpg" width="200" height="260"/>
+*  QQ群：**531573361**
+*  Wechat：**Akaibiu**
+*  <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=TfguIpF07T01TxY0n4nnHCTOZWO6djOU&jump_from=webapi&authKey=S57kk7y9hugIFUol9cQBYct+gnW4h6CPoSgCkfMA9w2EixF+Q2o+bilZTGSfiH+v"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="技术交流反馈QQ群" title="技术交流反馈QQ群"></a>
+*  [这里是我的个人博客！👈](https://salephine.asia)
 ***
 
-### 友情链接
-*  **阿凯(wx:Akibiu)在此向各位使用此模板的用户致以崇高的谢意，也感谢Tuniao-Ui和Z-paging提供技术支持。如有疑问或需优化的地方，可在下方评论区留言或加我联系方式向我反馈。**
-*  **如果觉得该插件还不错或者对您有帮助，希望您动动小手帮我一键三连!谢谢谢谢谢谢谢啦！~~**
-*  [TuniaoUi官方文档](https://docs.ahuaaa.cn/)
-*  [z-paging官方文档](https://z-paging.zxlee.cn/)
-*  [优秀CSDN博客推荐-许老师](https://blog.csdn.net/weixin_55176089?type=blog) 
-*  [多端壁纸平台-弃续](http://sevensugar.com/)
+### ~ 🌼
+*  鸣谢：Tuniao-Ui、z-paging、lodash.js、animate.css！
+*  感谢您的信任和支持，如果您在使用过程中有任何疑问或建议，或者您在阅读使用文档的时候遇到了疑惑或者困难，我将格外珍惜您的反馈。欢迎您的咨询~😃
+*  **如果您认为Akai-xz对您有帮助，Akai-xz的创作者非常希望您能动动小手评论点赞和收藏一下，诚挚致谢!**
 ***
-
-<img src="https://mp-544a8cd9-03b3-41fd-9f50-daa7de994b60.cdn.bspapp.com/cloudstorage/2201852c-b805-4010-8ca8-52bc6cc9c364.gif" style="zoom:70%;" />
 
 
 

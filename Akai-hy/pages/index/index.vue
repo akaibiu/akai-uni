@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="searchBox">
 			<view class="sLeft">
-				<image src="../../static/images/search-icon.png" class="sIcon" mode=""></image>
+				<image src="@/static/index/search-icon.png" class="sIcon" mode=""></image>
 				<input type="text" v-model="sValue" placeholder="女士夏季多巴胺穿搭">
 			</view>
 			<view class="sBtn" @click="startSearch">
@@ -68,7 +68,7 @@
 			</view>
 		</view>
 		<view class="tab">
-			<image src="../../static/images/tips.png" class="icon" mode=""></image>
+			<image src="@/static/index/tips.png" class="icon" mode=""></image>
 			<view class="info">
 				将你要出售的二手物品发布到我们的平台，寻找感兴趣的买家。
 			</view>
@@ -85,7 +85,7 @@
 							{{item.name}}
 						</view>
 						<view class="auth">
-							<image src="@/static/images/auth.png" class="authIcon" mode=""></image>
+							<image src="@/static/index/auth.png" class="authIcon" mode=""></image>
 							<text>{{item.auth}}</text>
 						</view>
 					</view>
@@ -162,13 +162,13 @@
 			// Release
 			release() {
 				uni.navigateTo({
-					url:'/pages/index/release/release'
+					url:'/pagesIndex/release'
 				})
 			},
 			// Go Detail
 			goDetail(item,index){
 				uni.navigateTo({
-					url:'/pages/index/goodsDetail/goodsDetail?item='+encodeURIComponent(JSON.stringify(item))
+					url:'/pagesIndex/goodsDetail?item='+encodeURIComponent(JSON.stringify(item))
 				})
 			}
 		}

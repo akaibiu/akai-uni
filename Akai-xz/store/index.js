@@ -43,7 +43,9 @@ const store = new Vuex.Store({
     // 状态栏高度
     vuex_status_bar_height: 0,
     // 自定义导航栏的高度
-    vuex_custom_bar_height: 0
+    vuex_custom_bar_height: 0,
+	// 需要存储到vuex的数据，这地方由你自定义，命名格式尽量使用vuex_开头
+	vuex_frenidList:[]
   },
   mutations: {
     $tStore(state, payload) {

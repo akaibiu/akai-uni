@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="searchBox">
 			<view class="inputBox">
-				<image src="../../static/images/search-icon.png" class="searchIcon" mode=""></image>
+				<image src="@/static/job/search-icon.png" class="searchIcon" mode=""></image>
 				<input type="text" name="" placeholder="请输入搜索内容" v-model="searchValue">
 			</view>
 			<view class="searchBtn" @click="startSearch">
@@ -11,19 +11,19 @@
 		</view>
 		<view class="banner">
 			<view class="item">
-				<image src="../../static/images/job.png" class="bIcon" mode=""></image>
+				<image src="@/static/job/job.png" class="bIcon" mode=""></image>
 				<text>附近工作</text>
 			</view>
 			<view class="item">
-				<image src="../../static/images/education.png" class="bIcon" mode=""></image>
+				<image src="@/static/job/education.png" class="bIcon" mode=""></image>
 				<text>找实习</text>
 			</view>
 			<view class="item">
-				<image src="../../static/images/package.png" class="bIcon" mode=""></image>
+				<image src="@/static/job/package.png" class="bIcon" mode=""></image>
 				<text>找兼职</text>
 			</view>
 			<view class="item">
-				<image src="../../static/images/type.png" class="bIcon" mode=""></image>
+				<image src="@/static/job/type.png" class="bIcon" mode=""></image>
 				<text>职位分类</text>
 			</view>
 		</view>
@@ -37,7 +37,7 @@
 					</view>
 				</view>
 				<view class="right">
-					<image src="../../static/images/add.png" class="add" @click="addJob" mode=""></image>
+					<image src="@/static/job/add.png" class="add" @click="addJob" mode=""></image>
 				</view>
 			</view>
 			<view class="list">
@@ -84,17 +84,156 @@
 					name: 'Java'
 				}],
 				current: 0, // tab选项
-				jobList: [
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'周女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'吴女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'王女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'张女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'李女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'谢女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'易女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'甘女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'苏女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
-					{jobName:'Java开发工程师',money:'30K-60K 14薪',badgeList:[{name:'1-3年'},{name:'本科'},{name:'美女'}],info:'鸭儿高头巴颗米科技有限公司/50-100人',hr:'郑女士-人事经理',header:'https://salephine.asia/img/index/logo.gif',address:'成都市-高新区'},
+				jobList: [{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '周女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
+					{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '吴女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
+					{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '王女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
+					{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '张女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
+					{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '李女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
+					{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '谢女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
+					{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '易女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
+					{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '甘女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
+					{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '苏女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
+					{
+						jobName: 'Java开发工程师',
+						money: '30K-60K 14薪',
+						badgeList: [{
+							name: '1-3年'
+						}, {
+							name: '本科'
+						}, {
+							name: '美女'
+						}],
+						info: '鸭儿高头巴颗米科技有限公司/50-100人',
+						hr: '郑女士-人事经理',
+						header: 'https://salephine.asia/img/index/logo.gif',
+						address: '成都市-高新区'
+					},
 				], // 工作列表
 			}
 		},
@@ -117,9 +256,9 @@
 			// Click Item
 			clickJobInfo(item, index) {
 				uni.navigateTo({
-					url:'/pages/job/jobDetail/jobDetail?item='+encodeURIComponent(JSON.stringify(item))
+					url:'/pagesJob/jobDetail?item='+encodeURIComponent(JSON.stringify(item))
 				})
-		 },
+			},
 			// Click Addjob
 			addJob() {
 				uni.showToast({

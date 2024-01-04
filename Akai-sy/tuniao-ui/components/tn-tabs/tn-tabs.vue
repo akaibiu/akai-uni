@@ -96,6 +96,13 @@
           return {}
         }
       },
+      // 未选中的item样式
+      inactiveItemStyle: {
+        type: Object,
+        default() {
+          return {}
+        }
+      },
       // 是否显示底部滑块
       showBar: {
         type: Boolean,
@@ -171,6 +178,7 @@
             Object.assign(style, this.activeItemStyle)
           } else {
             style.color = this.inactiveColor
+            Object.assign(style, this.inactiveItemStyle)
           }
           return style
         }

@@ -2,7 +2,7 @@
 	<view>
 		<view class="address-window" :class="value === true ? 'on' : ''">
             <view class="title">
-                <image class="title-logo" src="@/static/login/l-logo.png" mode=""></image>
+                <image class="title-logo" src="@/pagesMine/static/l-logo.png" mode=""></image>
                 <view class="title-txt">
                     银龄 申请
                 </view>
@@ -52,7 +52,7 @@ export default {
 	},
 	data: function() {
 		return {
-            headimg:'../../static/login/l-unhead.png',
+            headimg:'../../pagesMine/static/l-unhead.png',
             avatarUrl:'',
             nickName:'',
 		};

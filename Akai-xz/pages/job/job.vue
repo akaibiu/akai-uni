@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="searchBox">
 			<view class="inputBox">
-				<image src="../../static/images/search-icon.png" class="searchIcon" mode=""></image>
+				<image src="@/static/job/search-icon.png" class="searchIcon" mode=""></image>
 				<input type="text" name="" placeholder="请输入搜索内容" v-model="searchValue">
 			</view>
 			<view class="searchBtn" @click="startSearch">
@@ -11,19 +11,19 @@
 		</view>
 		<view class="banner">
 			<view class="item">
-				<image src="../../static/images/job.png" class="bIcon" mode=""></image>
+				<image src="@/static/job/job.png" class="bIcon" mode=""></image>
 				<text>附近工作</text>
 			</view>
 			<view class="item">
-				<image src="../../static/images/education.png" class="bIcon" mode=""></image>
+				<image src="@/static/job/education.png" class="bIcon" mode=""></image>
 				<text>找实习</text>
 			</view>
 			<view class="item">
-				<image src="../../static/images/package.png" class="bIcon" mode=""></image>
+				<image src="@/static/job/package.png" class="bIcon" mode=""></image>
 				<text>找兼职</text>
 			</view>
 			<view class="item">
-				<image src="../../static/images/type.png" class="bIcon" mode=""></image>
+				<image src="@/static/job/type.png" class="bIcon" mode=""></image>
 				<text>职位分类</text>
 			</view>
 		</view>
@@ -37,7 +37,7 @@
 					</view>
 				</view>
 				<view class="right">
-					<image src="../../static/images/add.png" class="add" @click="addJob" mode=""></image>
+					<image src="@/static/job/add.png" class="add" @click="addJob" mode=""></image>
 				</view>
 			</view>
 			<view class="list">
@@ -117,7 +117,7 @@
 			// Click Item
 			clickJobInfo(item, index) {
 				uni.navigateTo({
-					url:'/pages/job/jobDetail/jobDetail?item='+encodeURIComponent(JSON.stringify(item))
+					url:'/pagesJob/jobDetail/jobDetail?item='+encodeURIComponent(JSON.stringify(item))
 				})
 		 },
 			// Click Addjob

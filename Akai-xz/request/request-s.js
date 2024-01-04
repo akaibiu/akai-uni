@@ -13,9 +13,14 @@
  *  @version 1.0.0 
  */
 import config from '@/config/config.js';
-import {getToken,setToken} from '@/utils/auth';
+import {
+	getToken,
+	setToken
+} from '@/utils/auth';
 import tool from '@/utils/common.js';
-import {refreshToken} from '@/apis/user.js';
+import {
+	refreshToken
+} from '@/apis/user.js';
 let timeout = 10000;
 let waitRequestList = [];
 let isRefreshingToken = false;
@@ -39,7 +44,6 @@ const request = config => {
 		url = url.slice(0, -1)
 		config.url = url
 	}
-	uni.showLoading();
 	return new Promise((resolve, reject) => {
 		uni.request({
 			method: config.method || 'get',

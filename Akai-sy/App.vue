@@ -30,14 +30,6 @@
 		}
 	}
 </script>
-<style>
-	page {
-		margin: 0;
-		padding: 0;
-		height: 100%;
-		width: 100%;
-	}
-</style>
 <style lang="scss">
 	// 引入Tuniao-Ui的样式文件(如果还需引入uView或者其他框架，如下即可)
 	@import './tuniao-ui/index.scss';
@@ -45,12 +37,4 @@
 	@import './tuniao-ui/iconfont.css';
 	// 在使用animate.css的时候注意一定要把animate.css文件中的 :root选择器改为 page (切记)。
 	@import '@/static/animate/animate.css';
-	// 去掉页面滚动条
-	::-webkit-scrollbar {
-		display: none !important;
-		width: 0 !important;
-		height: 0 !important;
-		-webkit-appearance: none;
-		background: transparent;
-	}
 </style>
